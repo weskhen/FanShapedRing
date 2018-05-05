@@ -9,7 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @class XLFanShapedAreaModel;
+
+@protocol XLFanShapedRingViewDelegate <NSObject>
+
+/** 点击到对应的区域 **/
+- (void)fanShapedRingViewClicked:(XLFanShapedAreaModel *)model;
+
+@end
 @interface XLFanShapedRingView : UIView
+
+@property (nonatomic, weak) id<XLFanShapedRingViewDelegate> delegate;
 
 /** 视图左右间距 默认15 **/
 - (void)setCurrentViewPadding:(CGFloat)padding;

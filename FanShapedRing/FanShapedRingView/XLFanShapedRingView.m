@@ -10,14 +10,13 @@
 #import "XLFanShapedAreaModel.h"
 #import "XLShapeLayer.h"
 
-#define XLDegreeToAngle(degrees)  ((2*M_PI*degrees)-(M_PI/2)) //度数转换角度
-#define XLRingCenterDistance 55 //环中心点到圆心的距离 (外环和内环的平均值)
-#define XLViewPadding 15 //视图左右间距
-#define XLPolyLineDisplacement 10 //折线x、y坐标的移动距离
-#define XLTextLinePadding 3 //文本和线之间的距离
-#define XLTextMinPaddingValue 45
-
-#define XLArcWidth 30 //圆弧的宽度
+#define KDegreeToAngle(degrees)  ((2*M_PI*degrees)-(M_PI/2)) //度数转换角度
+#define KRingCenterDistance 55 //环中心点到圆心的距离 (外环和内环的平均值)
+#define KViewPadding 15 //视图左右间距
+#define KPolyLineDisplacement 10 //折线x、y坐标的移动距离
+#define KTextLinePadding 3 //文本和线之间的距离
+#define KLineMinPaddingValue 45 //线之间最小的距离
+#define KArcWidth 30 //圆弧的宽度
 
 @interface XLFanShapedRingView ()
 
@@ -25,11 +24,11 @@
 
 /** 圆心 **/
 @property (nonatomic, assign) CGPoint circleCenter;
-/** 默认XLViewPadding **/
+/** 默认KViewPadding **/
 @property (nonatomic, assign) CGFloat viewPadding;
-/** 默认XLPolyLineDisplacement **/
+/** 默认KPolyLineDisplacement **/
 @property (nonatomic, assign) CGFloat polyLineDisplacement;
-/** 默认XLRingCenterDistance **/
+/** 默认KRingCenterDistance **/
 @property (nonatomic, assign) CGFloat ringCenterDistance;
 
 /** 是否打开动画 **/
@@ -44,9 +43,9 @@
     if (self) {
         
         self.circleCenter = CGPointMake(frame.size.width/2.0, frame.size.height/2.0);
-        self.viewPadding = XLViewPadding;
-        self.polyLineDisplacement = XLPolyLineDisplacement;
-        self.ringCenterDistance = XLRingCenterDistance;
+        self.viewPadding = KViewPadding;
+        self.polyLineDisplacement = KPolyLineDisplacement;
+        self.ringCenterDistance = KRingCenterDistance;
     }
     return self;
 }
@@ -97,16 +96,15 @@
         
         XLShapeLayer * progressLayer = [XLShapeLayer new];
         progressLayer.index = i;
-        UIBezierPath * progressPath = [UIBezierPath bezierPathWithArcCenter:self.circleCenter radius:self.ringCenterDistance startAngle:XLDegreeToAngle(startAngle) endAngle:XLDegreeToAngle(endAngle) clockwise:YES];
-        progressLayer.path = CGPathCreateCopyByStrokingPath(progressPath.CGPath, &CGAffineTransformIdentity, XLArcWidth, kCGLineCapButt, kCGLineJoinBevel, 0);
+        UIBezierPath * progressPath = [UIBezierPath bezierPathWithArcCenter:self.circleCenter radius:self.ringCenterDistance startAngle:KDegreeToAngle(startAngle) endAngle:KDegreeToAngle(endAngle) clockwise:YES];
+        progressLayer.path = CGPathCreateCopyByStrokingPath(progressPath.CGPath, &CGAffineTransformIdentity, KArcWidth, kCGLineCapButt, kCGLineJoinBevel, 0);
         progressLayer.fillColor = model.areaColor.CGColor;
-//        progressLayer.strokeColor = model.areaColor.CGColor;
         [self.layer addSublayer:progressLayer];
         lastAngle = endAngle;
         
         //画线 弧度的中心角度
-        CGFloat radianCenterCoordinate = (XLDegreeToAngle(startAngle) + XLDegreeToAngle(endAngle)) / 2.0;
-        CGPoint centerCoordinate = CGPointMake(self.circleCenter.x+(self.ringCenterDistance+XLArcWidth/2.0)*cos(radianCenterCoordinate), self.circleCenter.y+(self.ringCenterDistance+XLArcWidth/2.0)*sin(radianCenterCoordinate));
+        CGFloat radianCenterCoordinate = (KDegreeToAngle(startAngle) + KDegreeToAngle(endAngle)) / 2.0;
+        CGPoint centerCoordinate = CGPointMake(self.circleCenter.x+(self.ringCenterDistance+KArcWidth/2.0)*cos(radianCenterCoordinate), self.circleCenter.y+(self.ringCenterDistance+KArcWidth/2.0)*sin(radianCenterCoordinate));
         
         CGPoint straightLinePoint = CGPointZero;
         CGPoint endPoint = CGPointZero;
@@ -122,20 +120,20 @@
             if ((centerCoordinate.x > self.circleCenter.x && lastCenterPoint.x > self.circleCenter.x)) {
                 //和前一个点位于圆心同一侧(右侧)
                 CGFloat yMin = centerCoordinate.y - lastCenterPoint.y;
-                if (yMin < XLTextMinPaddingValue) {
+                if (yMin < KLineMinPaddingValue) {
                     //折线幅度加大 用外切线来实现
-                    float xPadding = fabs((self.ringCenterDistance+XLArcWidth/2.0 - (self.circleCenter.y-lastCenterPoint.y-XLTextMinPaddingValue)*cos(radianCenterCoordinate))/sin(radianCenterCoordinate));
-                    straightLinePoint = CGPointMake(centerCoordinate.x+xPadding + XLArcWidth/2.0, lastCenterPoint.y+XLTextMinPaddingValue);
+                    float xPadding = fabs((self.ringCenterDistance+KArcWidth/2.0 - (self.circleCenter.y-lastCenterPoint.y-KLineMinPaddingValue)*cos(radianCenterCoordinate))/sin(radianCenterCoordinate));
+                    straightLinePoint = CGPointMake(centerCoordinate.x+xPadding + KArcWidth/2.0, lastCenterPoint.y+KLineMinPaddingValue);
                 }
             }
             else if (centerCoordinate.x < self.circleCenter.x && lastCenterPoint.x < self.circleCenter.x)
             {
                 //和前一个点位于圆心同一侧(左侧侧)
                 CGFloat yMin = lastCenterPoint.y - centerCoordinate.y;
-                if (yMin < XLTextMinPaddingValue) {
+                if (yMin < KLineMinPaddingValue) {
                     //折线幅度加大
-                    float xPadding = fabs((self.ringCenterDistance+XLArcWidth/2.0 - (lastCenterPoint.y-self.circleCenter.y-XLTextMinPaddingValue)*cos(radianCenterCoordinate))/sin(radianCenterCoordinate));
-                    straightLinePoint = CGPointMake(centerCoordinate.x-xPadding-XLArcWidth/2.0, lastCenterPoint.y-XLTextMinPaddingValue);
+                    float xPadding = fabs((self.ringCenterDistance+KArcWidth/2.0 - (lastCenterPoint.y-self.circleCenter.y-KLineMinPaddingValue)*cos(radianCenterCoordinate))/sin(radianCenterCoordinate));
+                    straightLinePoint = CGPointMake(centerCoordinate.x-xPadding-KArcWidth/2.0, lastCenterPoint.y-KLineMinPaddingValue);
                 }
             }
             else
@@ -175,10 +173,10 @@
         CGRect nameRect = [model.areaName boundingRectWithSize:CGSizeZero options:NSStringDrawingUsesLineFragmentOrigin attributes:attr context:nil];
         CGRect valueRect = [model.areaValue boundingRectWithSize:CGSizeZero options:NSStringDrawingUsesLineFragmentOrigin attributes:attr context:nil];
         nameRect.origin.x = (centerCoordinate.x < self.circleCenter.x)?(self.viewPadding):(CGRectGetWidth(self.bounds)-self.viewPadding-nameRect.size.width);
-        nameRect.origin.y = endPoint.y+XLTextLinePadding;
+        nameRect.origin.y = endPoint.y+KTextLinePadding;
         
         valueRect.origin.x = (centerCoordinate.x < self.circleCenter.x)?(self.viewPadding):(CGRectGetWidth(self.bounds)-self.viewPadding-valueRect.size.width);
-        valueRect.origin.y = endPoint.y-XLTextLinePadding-valueRect.size.height;
+        valueRect.origin.y = endPoint.y-KTextLinePadding-valueRect.size.height;
         
         [model.areaName drawInRect:nameRect withAttributes:attr];
         [model.areaValue drawInRect:valueRect withAttributes:attr];
@@ -200,6 +198,10 @@
     NSInteger selectIndex = [self getCurrentSelectedOnTouch:point];
     if (selectIndex != -1) {
         NSLog(@"被点击的部分------%ld",(long)selectIndex);
+        if ([_delegate respondsToSelector:@selector(fanShapedRingViewClicked:)] && (self.fanShapedAreaList.count > selectIndex-1)) {
+            XLFanShapedAreaModel *model = [self.fanShapedAreaList objectAtIndex:selectIndex];
+            [self.delegate fanShapedRingViewClicked:model];
+        }
     }
 }
 
