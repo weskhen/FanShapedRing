@@ -13,6 +13,9 @@
 		E0CDFB33209C3A0900F6C797 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0CDFB32209C3A0900F6C797 /* Assets.xcassets */; };
 		E0CDFB36209C3A0900F6C797 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0CDFB34209C3A0900F6C797 /* LaunchScreen.storyboard */; };
 		E0CDFB39209C3A0900F6C797 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CDFB38209C3A0900F6C797 /* main.m */; };
+		E0CDFB42209C3A6000F6C797 /* XLFanShapedRingView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CDFB41209C3A6000F6C797 /* XLFanShapedRingView.m */; };
+		E0CDFB45209C3A9300F6C797 /* XLFanShapedAreaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CDFB44209C3A9300F6C797 /* XLFanShapedAreaModel.m */; };
+		E0CDFB48209C3B2200F6C797 /* XLShapeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CDFB47209C3B2200F6C797 /* XLShapeLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,12 @@
 		E0CDFB35209C3A0900F6C797 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E0CDFB37209C3A0900F6C797 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E0CDFB38209C3A0900F6C797 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E0CDFB40209C3A6000F6C797 /* XLFanShapedRingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLFanShapedRingView.h; sourceTree = "<group>"; };
+		E0CDFB41209C3A6000F6C797 /* XLFanShapedRingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLFanShapedRingView.m; sourceTree = "<group>"; };
+		E0CDFB43209C3A9300F6C797 /* XLFanShapedAreaModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLFanShapedAreaModel.h; sourceTree = "<group>"; };
+		E0CDFB44209C3A9300F6C797 /* XLFanShapedAreaModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLFanShapedAreaModel.m; sourceTree = "<group>"; };
+		E0CDFB46209C3B2200F6C797 /* XLShapeLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLShapeLayer.h; sourceTree = "<group>"; };
+		E0CDFB47209C3B2200F6C797 /* XLShapeLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XLShapeLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +71,7 @@
 				E0CDFB2A209C3A0600F6C797 /* AppDelegate.m */,
 				E0CDFB2C209C3A0700F6C797 /* ViewController.h */,
 				E0CDFB2D209C3A0700F6C797 /* ViewController.m */,
+				E0CDFB3F209C3A4D00F6C797 /* FanShapedRingView */,
 				E0CDFB2F209C3A0700F6C797 /* Main.storyboard */,
 				E0CDFB32209C3A0900F6C797 /* Assets.xcassets */,
 				E0CDFB34209C3A0900F6C797 /* LaunchScreen.storyboard */,
@@ -69,6 +79,19 @@
 				E0CDFB38209C3A0900F6C797 /* main.m */,
 			);
 			path = FanShapedRing;
+			sourceTree = "<group>";
+		};
+		E0CDFB3F209C3A4D00F6C797 /* FanShapedRingView */ = {
+			isa = PBXGroup;
+			children = (
+				E0CDFB40209C3A6000F6C797 /* XLFanShapedRingView.h */,
+				E0CDFB41209C3A6000F6C797 /* XLFanShapedRingView.m */,
+				E0CDFB43209C3A9300F6C797 /* XLFanShapedAreaModel.h */,
+				E0CDFB44209C3A9300F6C797 /* XLFanShapedAreaModel.m */,
+				E0CDFB46209C3B2200F6C797 /* XLShapeLayer.h */,
+				E0CDFB47209C3B2200F6C797 /* XLShapeLayer.m */,
+			);
+			path = FanShapedRingView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,7 +165,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0CDFB2E209C3A0700F6C797 /* ViewController.m in Sources */,
+				E0CDFB48209C3B2200F6C797 /* XLShapeLayer.m in Sources */,
+				E0CDFB42209C3A6000F6C797 /* XLFanShapedRingView.m in Sources */,
 				E0CDFB39209C3A0900F6C797 /* main.m in Sources */,
+				E0CDFB45209C3A9300F6C797 /* XLFanShapedAreaModel.m in Sources */,
 				E0CDFB2B209C3A0600F6C797 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
