@@ -16,8 +16,8 @@
     self = [super init];
     if (self) {
         //默认字体 颜色
-        _labelFont = [UIFont systemFontOfSize:10];
-        _textColor = [UIColor grayColor];
+        _labelFont = [UIFont systemFontOfSize:13];
+        _textColor = [UIColor colorWithRed:153/255 green:153/255 blue:153/255 alpha:1];
     }
     return self;
 }

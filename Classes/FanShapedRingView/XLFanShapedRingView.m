@@ -13,9 +13,9 @@
 #define KDegreeToAngle(degrees)  ((2*M_PI*degrees)-(M_PI/2)) //度数转换角度
 #define KRingCenterDistance 55 //环中心点到圆心的距离 (外环和内环的平均值)
 #define KViewPadding 15 //视图左右间距
-#define KPolyLineDisplacement 10 //折线x、y坐标的移动距离
-#define KTextLinePadding 3 //文本和线之间的距离
-#define KLineMinPaddingValue 35 //线之间最小的距离
+#define KPolyLineDisplacement 15 //折线x、y坐标的移动距离
+#define KTextLinePadding 2 //文本和线之间的距离
+#define KLineMinPaddingValue 50 //线之间最小的距离
 #define KArcWidth 30 //圆弧的宽度
 
 @interface XLFanShapedRingView ()
