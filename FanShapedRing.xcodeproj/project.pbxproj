@@ -84,12 +84,12 @@
 		E0CDFB49209DEA2A00F6C797 /* FanShapedRingView */ = {
 			isa = PBXGroup;
 			children = (
-				E0CDFB4A209DEA2A00F6C797 /* XLFanShapedAreaModel.h */,
-				E0CDFB4B209DEA2A00F6C797 /* XLShapeLayer.m */,
 				E0CDFB4C209DEA2A00F6C797 /* XLFanShapedRingView.h */,
+				E0CDFB4F209DEA2A00F6C797 /* XLFanShapedRingView.m */,
+				E0CDFB4A209DEA2A00F6C797 /* XLFanShapedAreaModel.h */,
 				E0CDFB4D209DEA2A00F6C797 /* XLFanShapedAreaModel.m */,
 				E0CDFB4E209DEA2A00F6C797 /* XLShapeLayer.h */,
-				E0CDFB4F209DEA2A00F6C797 /* XLFanShapedRingView.m */,
+				E0CDFB4B209DEA2A00F6C797 /* XLShapeLayer.m */,
 			);
 			name = FanShapedRingView;
 			path = Classes/FanShapedRingView;

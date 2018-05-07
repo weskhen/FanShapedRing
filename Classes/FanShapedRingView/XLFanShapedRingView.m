@@ -15,7 +15,7 @@
 #define KViewPadding 15 //视图左右间距
 #define KPolyLineDisplacement 10 //折线x、y坐标的移动距离
 #define KTextLinePadding 3 //文本和线之间的距离
-#define KLineMinPaddingValue 45 //线之间最小的距离
+#define KLineMinPaddingValue 35 //线之间最小的距离
 #define KArcWidth 30 //圆弧的宽度
 
 @interface XLFanShapedRingView ()
@@ -84,9 +84,9 @@
         return;
     }
     
-    float lastAngle = 0; //从0起点开始
+    float lastAngle = 0; //角度从0起点开始
+    CGPoint lastCenterPoint = CGPointZero;//记录上个折线点的位置
     
-    CGPoint lastCenterPoint = CGPointZero;
     for (int i = 0; i < self.fanShapedAreaList.count; i++) {
         XLFanShapedAreaModel *model = [self.fanShapedAreaList objectAtIndex:i];
         model.index = i;
@@ -102,6 +102,12 @@
         [self.layer addSublayer:progressLayer];
         lastAngle = endAngle;
         
+        NSDictionary *attr = @{NSFontAttributeName:model.labelFont,NSForegroundColorAttributeName:model.textColor};
+        CGRect nameRect = [model.areaName boundingRectWithSize:CGSizeZero options:NSStringDrawingUsesLineFragmentOrigin attributes:attr context:nil];
+        CGRect valueRect = [model.areaValue boundingRectWithSize:CGSizeZero options:NSStringDrawingUsesLineFragmentOrigin attributes:attr context:nil];
+        
+        float maxTextWidth = MAX(CGRectGetWidth(nameRect), CGRectGetWidth(valueRect))+10;
+        
         //画线 弧度的中心角度
         CGFloat radianCenterCoordinate = (KDegreeToAngle(startAngle) + KDegreeToAngle(endAngle)) / 2.0;
         CGPoint centerCoordinate = CGPointMake(self.circleCenter.x+(self.ringCenterDistance+KArcWidth/2.0)*cos(radianCenterCoordinate), self.circleCenter.y+(self.ringCenterDistance+KArcWidth/2.0)*sin(radianCenterCoordinate));
@@ -109,10 +115,8 @@
         CGPoint straightLinePoint = CGPointZero;
         CGPoint endPoint = CGPointZero;
         
-        BOOL willPolyLine = NO;
         if (CGPointEqualToPoint(lastCenterPoint, CGPointZero)) {
             //第一个点默认折线
-            willPolyLine = YES;
             straightLinePoint = CGPointMake((centerCoordinate.x < self.circleCenter.x)?(centerCoordinate.x-self.polyLineDisplacement):(centerCoordinate.x+self.polyLineDisplacement), (centerCoordinate.y < self.circleCenter.y)?(centerCoordinate.y-self.polyLineDisplacement):(centerCoordinate.y+self.polyLineDisplacement));
         }
         else
@@ -121,20 +125,13 @@
                 //和前一个点位于圆心同一侧(右侧)
                 CGFloat yMin = centerCoordinate.y - lastCenterPoint.y;
                 if (yMin < KLineMinPaddingValue) {
-                    //折线幅度加大 用外切线来实现
-                    float xPadding = fabs((self.ringCenterDistance+KArcWidth/2.0 - (self.circleCenter.y-lastCenterPoint.y-KLineMinPaddingValue)*cos(radianCenterCoordinate))/sin(radianCenterCoordinate));
-                    straightLinePoint = CGPointMake(centerCoordinate.x+xPadding + KArcWidth/2.0, lastCenterPoint.y+KLineMinPaddingValue);
+                    straightLinePoint = CGPointMake(CGRectGetWidth(self.bounds)- maxTextWidth-KViewPadding, lastCenterPoint.y+KLineMinPaddingValue);
                 }
             }
             else if (centerCoordinate.x < self.circleCenter.x && lastCenterPoint.x < self.circleCenter.x)
             {
-                //和前一个点位于圆心同一侧(左侧侧)
-                CGFloat yMin = lastCenterPoint.y - centerCoordinate.y;
-                if (yMin < KLineMinPaddingValue) {
-                    //折线幅度加大
-                    float xPadding = fabs((self.ringCenterDistance+KArcWidth/2.0 - (lastCenterPoint.y-self.circleCenter.y-KLineMinPaddingValue)*cos(radianCenterCoordinate))/sin(radianCenterCoordinate));
-                    straightLinePoint = CGPointMake(centerCoordinate.x-xPadding-KArcWidth/2.0, lastCenterPoint.y-KLineMinPaddingValue);
-                }
+                //和前一个点位于圆心同一侧(左侧)
+                straightLinePoint = CGPointMake(maxTextWidth+KViewPadding, lastCenterPoint.y-KLineMinPaddingValue);
             }
             else
             {
@@ -169,9 +166,6 @@
         [self.layer addSublayer:lineLayer];
 
         //写文本
-        NSDictionary *attr = @{NSFontAttributeName:model.labelFont,NSForegroundColorAttributeName:model.textColor};
-        CGRect nameRect = [model.areaName boundingRectWithSize:CGSizeZero options:NSStringDrawingUsesLineFragmentOrigin attributes:attr context:nil];
-        CGRect valueRect = [model.areaValue boundingRectWithSize:CGSizeZero options:NSStringDrawingUsesLineFragmentOrigin attributes:attr context:nil];
         nameRect.origin.x = (centerCoordinate.x < self.circleCenter.x)?(self.viewPadding):(CGRectGetWidth(self.bounds)-self.viewPadding-nameRect.size.width);
         nameRect.origin.y = endPoint.y+KTextLinePadding;
         
